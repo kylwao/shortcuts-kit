@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "shortcuts-src"
+version = "0.1.0"
+description = "Decompile Apple Shortcuts to editable XML/JSON source and compile back to signed .shortcut files."
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "MIT" }
+authors = [{ name = "kylwao" }]
+keywords = ["apple", "shortcuts", "icloud", "plist", "reverse-engineering", "agent-skill"]
+classifiers = [
+    "Environment :: Console",
+    "Operating System :: MacOS :: MacOS X",
+    "Programming Language :: Python :: 3",
+    "Topic :: Utilities",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/kylwao/shortcuts-kit"
+Issues = "https://github.com/kylwao/shortcuts-kit/issues"
+
+[project.scripts]
+shortcuts-src = "shortcuts_src.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/shortcuts_src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,25 @@
+name: 工具缺陷
+description: shortcuts-src 崩溃、输出错误或往返不等价
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 现象
+      description: 执行的命令和完整错误输出
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: 最小复现
+      description: 已脱敏的几个动作 JSON 片段，或可公开的 iCloud 链接
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: 环境
+      placeholder: macOS 15.x，Python 3.x，shortcuts-src 0.1.0
+    validations:
+      required: true

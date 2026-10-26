@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install pytest
+      - run: python -m pytest -q
+      - name: Launcher smoke test
+        run: |
+          SHORTCUTS_KIT_BIN="$RUNNER_TEMP/bin" scripts/install.sh --no-skill
+          "$RUNNER_TEMP/bin/shortcuts-src" inspect skills/apple-shortcuts/templates/blank.source.json
+
+  privacy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan for personal data
+        run: |
+          # 0123456789abcdef... is the placeholder iCloud ID used in tests.
+          if git grep -nE '/Users/[A-Za-z]|/home/[a-z]+/|icloud\.com/shortcuts/[0-9a-fA-F]{32}|sk-[A-Za-z0-9]{16,}' -- . ':!.github/workflows/ci.yml' ':!skills/apple-shortcuts/references/contributing-upstream.md' \
+              | grep -vi '0123456789abcdef0123456789abcdef'; then
+            echo "::error::Possible personal data found (see lines above)."
+            exit 1
+          fi

@@ -1,0 +1,112 @@
+{
+  "WFWorkflowClientVersion": "4407",
+  "WFWorkflowMinimumClientVersion": 3010,
+  "WFWorkflowMinimumClientVersionString": "3010",
+  "WFWorkflowIcon": {
+    "WFWorkflowIconStartColor": 3679049983,
+    "WFWorkflowIconGlyphNumber": 59740
+  },
+  "WFWorkflowOutputContentItemClasses": [
+    "WFStringContentItem"
+  ],
+  "WFWorkflowHasOutputFallback": false,
+  "WFWorkflowInputContentItemClasses": [
+    "WFStringContentItem"
+  ],
+  "WFWorkflowImportQuestions": [],
+  "WFWorkflowTypes": [
+    "WFWorkflowTypeShowInSearch"
+  ],
+  "WFWorkflowHasShortcutInputVariables": false,
+  "WFWorkflowActions": [
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.comment",
+      "WFWorkflowActionParameters": {
+        "UUID": "11111111-1111-4111-8111-111111111111",
+        "WFCommentActionText": "minimal test fixture"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "UUID": "22222222-2222-4222-8222-222222222222",
+        "WFTextActionText": "hi"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "UUID": "33333333-3333-4333-8333-333333333333",
+        "WFVariableName": "greeting",
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "22222222-2222-4222-8222-222222222222",
+            "Type": "ActionOutput",
+            "OutputName": "Text"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "UUID": "44444444-4444-4444-8444-444444444444",
+        "GroupingIdentifier": "55555555-5555-4555-8555-555555555555",
+        "WFControlFlowMode": 0,
+        "WFCondition": 4,
+        "WFConditionalActionString": "hi",
+        "WFInput": {
+          "Value": {
+            "Type": "Variable",
+            "VariableName": "greeting"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "UUID": "66666666-6666-4666-8666-666666666666",
+        "WFTextActionText": "inside then"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "UUID": "77777777-7777-4777-8777-777777777777",
+        "GroupingIdentifier": "55555555-5555-4555-8555-555555555555",
+        "WFControlFlowMode": 1
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "UUID": "88888888-8888-4888-8888-888888888888",
+        "WFTextActionText": "inside else"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "UUID": "99999999-9999-4999-8999-999999999999",
+        "GroupingIdentifier": "55555555-5555-4555-8555-555555555555",
+        "WFControlFlowMode": 2
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.showresult",
+      "WFWorkflowActionParameters": {
+        "UUID": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "Text": {
+          "Value": {
+            "Type": "Variable",
+            "VariableName": "greeting"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        }
+      }
+    }
+  ]
+}

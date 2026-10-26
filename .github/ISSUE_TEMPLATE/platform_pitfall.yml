@@ -1,0 +1,30 @@
+name: 平台坑
+description: iOS / macOS 上某个动作的行为与预期不符，且 pitfalls.md 尚未收录
+labels: [pitfall]
+body:
+  - type: input
+    id: env
+    attributes:
+      label: 环境
+      description: iOS / macOS 版本，涉及的动作 ID
+      placeholder: iOS 26.0，is.workflow.actions.getvalueforkey
+    validations:
+      required: true
+  - type: textarea
+    id: symptom
+    attributes:
+      label: 现象
+    validations:
+      required: true
+  - type: textarea
+    id: cause
+    attributes:
+      label: 原因
+      description: 已确认的原因；不确定请写「推测」
+  - type: textarea
+    id: fix
+    attributes:
+      label: 解法
+      description: 具体做法，最好附已脱敏的最小 JSON 片段
+    validations:
+      required: true

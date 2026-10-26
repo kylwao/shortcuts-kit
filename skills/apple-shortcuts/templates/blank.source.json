@@ -1,0 +1,54 @@
+{
+  "WFWorkflowClientVersion": "4528.0.4.3",
+  "WFWorkflowMinimumClientVersion": 3010,
+  "WFWorkflowMinimumClientVersionString": "3010",
+  "WFWorkflowIcon": {
+    "WFWorkflowIconStartColor": 3679049983,
+    "WFWorkflowIconGlyphNumber": 59740
+  },
+  "WFWorkflowTypes": [],
+  "WFWorkflowInputContentItemClasses": [
+    "WFStringContentItem"
+  ],
+  "WFWorkflowOutputContentItemClasses": [],
+  "WFWorkflowImportQuestions": [],
+  "WFWorkflowHasOutputFallback": false,
+  "WFWorkflowHasShortcutInputVariables": false,
+  "WFQuickActionSurfaces": [],
+  "WFWorkflowActions": [
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.comment",
+      "WFWorkflowActionParameters": {
+        "UUID": "5016ACE5-9A20-446B-886A-BAF4E9832AB8",
+        "WFCommentActionText": "<名称>\n用途：<一句话说明>\n首次使用前置：<需要的权限或 App>"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.ask",
+      "WFWorkflowActionParameters": {
+        "UUID": "868D1428-4913-4560-BA13-4F0E4F85F944",
+        "WFInputType": "Text",
+        "WFAskActionPrompt": "请输入内容"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.showresult",
+      "WFWorkflowActionParameters": {
+        "UUID": "AAD869E6-535A-4C09-9395-36F2C891FA2E",
+        "Text": {
+          "Value": {
+            "string": "你输入了：\ufffc",
+            "attachmentsByRange": {
+              "{5, 1}": {
+                "OutputUUID": "868D1428-4913-4560-BA13-4F0E4F85F944",
+                "Type": "ActionOutput",
+                "OutputName": "提供的输入"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    }
+  ]
+}

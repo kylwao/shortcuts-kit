@@ -1,0 +1,38 @@
+{
+  "WFWorkflowClientVersion": "4528.0.4.3",
+  "WFWorkflowMinimumClientVersion": 3010,
+  "WFWorkflowMinimumClientVersionString": "3010",
+  "WFWorkflowIcon": {
+    "WFWorkflowIconStartColor": 3679049983,
+    "WFWorkflowIconGlyphNumber": 59740
+  },
+  "WFWorkflowTypes": [],
+  "WFWorkflowInputContentItemClasses": [
+    "WFAppContentItem",
+    "WFAppStoreAppContentItem",
+    "WFArticleContentItem",
+    "WFContactContentItem",
+    "WFDateContentItem",
+    "WFEmailAddressContentItem",
+    "WFFolderContentItem",
+    "WFGenericFileContentItem",
+    "WFImageContentItem",
+    "WFiTunesProductContentItem",
+    "WFLocationContentItem",
+    "WFDCMapsLinkContentItem",
+    "WFAVAssetContentItem",
+    "WFPDFContentItem",
+    "WFPhoneNumberContentItem",
+    "WFRichTextContentItem",
+    "WFSafariWebPageContentItem",
+    "WFStringContentItem",
+    "WFURLContentItem"
+  ],
+  "WFWorkflowOutputContentItemClasses": [],
+  "WFWorkflowImportQuestions": [],
+  "WFWorkflowHasOutputFallback": false,
+  "WFWorkflowHasShortcutInputVariables": false,
+  "WFQuickActionSurfaces": [],
+  "WFWorkflowActionCount": 462,
+  "_firstComment": "刚炫了啥（Bite Dance） V0.7\n基于用户手动调整的 V0.6.2。\n主菜单 3 路：🍱 餐食 / 💊 固食 / 🆕 录入固食。\n\n【V0.7 改动】\n1. 计算链重写为 multiple 模式（参考用户 iCloud shortcut）：\n   已录入: multiple = PerUserBase ÷ PerBase × ActualServing\n   一次性: multiple = ActualAmount ÷ PerBase\n   actual_X = per_unit_X × multiple\n   math 用显式 WFInput 做左操作数，不依赖隐式 previous output。\n2. 固食两条分支共享计算结果展示（确认/取消），\n   移到固食子菜单结束后。Food/FoodUnit 预转纯文本。\n\n【首次使用前置】\n1. 备忘录 App 创建「固食档案」文件夹。\n2. 健康权限全部允许。\n3. 下载豆包并登陆。"
+}
