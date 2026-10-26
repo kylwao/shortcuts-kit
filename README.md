@@ -68,7 +68,7 @@ Skill 会引导 AI 完成以下步骤：
 2. 确定起点：
    - 推荐：你先在 Shortcuts.app 里搭骨架，分享出 iCloud 链接，AI 再 `decompile` 得到源码；
    - 或者从 Skill 自带的空白模板开始。
-3. 在项目的 `MyShortcuts/<分类>/V<x.y>/` 下编辑 `source.json`，用 `compile` 验证，更新 `VERSIONS.md`。
+3. 在项目的 `MyShortcuts/<分类>/V<x.y>/` 下编辑 `source.json`，用 `check` 和 `compile` 验证，更新 `VERSIONS.md`。
 4. 需要真机调试时，用 `--profile dev` 编译，再用 `ingest-logs` 读回日志并定位到出错的动作。
 5. 交给你的只有三件事：导入签名产物、在 App 里拷贝 iCloud 分享链接、首次运行时授权。
 
@@ -106,7 +106,7 @@ Skill 的完整规则见 [skills/apple-shortcuts/SKILL.md](skills/apple-shortcut
 
 ## 命令速查
 
-总入口：`shortcuts-src {decompile | compile | inspect | ingest-logs} ...`，每个子命令都支持 `-h`。
+总入口：`shortcuts-src {decompile | compile | inspect | check | ingest-logs} ...`，每个子命令都支持 `-h`。
 
 ```bash
 # iCloud 链接或 .shortcut → 源码四件套（source.json / source.xml / flow.md / meta.json）
@@ -114,6 +114,9 @@ shortcuts-src decompile "https://www.icloud.com/shortcuts/<32 位 hex>" -o out -
 
 # 只看摘要，不写文件
 shortcuts-src inspect out/demo.source.json
+
+# 编译前的结构校验：有 error 时退出码为 1
+shortcuts-src check out/demo.source.json
 
 # 源码 → 签名 .shortcut（--allow-unsigned 跳过签名，用于快速验证）
 shortcuts-src compile out/demo.source.json -o out/demo.signed.shortcut
@@ -143,6 +146,24 @@ open -a Shortcuts out/demo.signed.shortcut
 | `--profile` | `release`（默认）或 `dev`（注入遥测）。 |
 | `--telemetry` | 遥测密度：`header-summary` / `branch`（默认）/ `full`，仅 `dev` 下生效。 |
 | `--category` | 日志路径里的分类名。默认从输入路径的 `MyShortcuts/<分类>/` 推断。 |
+
+### `check`
+
+| 参数 | 作用 |
+| --- | --- |
+| `INPUT` | 同 `decompile`。`.json` / `.xml` 源码会在每条问题前标出动作所在行号。 |
+
+每条问题一行，格式是 `<级别> #<动作下标> L<行号> <动作> [<代码>] <说明>`，最后一行是汇总。有 error 时退出码为 1，只有 warning 时为 0。
+
+| 级别 | 代码 | 含义 |
+| --- | --- | --- |
+| error | `duplicate-uuid` | 两个动作的 `UUID` 相同（不区分大小写）。 |
+| error | `unclosed-block` / `end-without-start` / `branch-outside-block` | 控制流块没有结束、没有开始，或分支不在任何块内。 |
+| error | `interleaved-block` | 两个块交错，内层块还没结束外层块就分支或结束了。 |
+| error | `identifier-mismatch` | 同一个 `GroupingIdentifier` 下动作 ID 不一致。 |
+| error | `reused-grouping-id` / `missing-grouping-id` / `invalid-control-flow-mode` | `GroupingIdentifier` 被另一个块复用或缺失，或 `WFControlFlowMode` 不是整数 0 / 1 / 2。 |
+| warning | `dangling-ref` | `ActionOutput` 引用的 `UUID` 不属于任何动作。Shortcuts.app 会在不起作用的字段里留下这种引用，确认该字段没在用就可以忽略。 |
+| warning | `forward-ref` | 引用了自身或后面动作的输出。 |
 
 ### 输入识别
 
@@ -231,7 +252,7 @@ out_path = compile_source("my.source.json", mode="anyone")
 shortcuts-kit/
 ├── src/shortcuts_src/        # 命令行工具（零第三方依赖）
 │   ├── cli.py  icloud.py  aea.py  plist_io.py
-│   ├── decompile.py  compile.py  flow.py  names.py
+│   ├── decompile.py  compile.py  check.py  flow.py  names.py
 │   └── profile.py  ingest.py # dev 遥测注入与日志聚合
 ├── tests/                    # pytest，含 examples 与 Skill 模板回归
 ├── skills/apple-shortcuts/   # Agent Skill

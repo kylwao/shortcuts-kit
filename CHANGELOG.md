@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- `shortcuts-src check`：编译前的结构校验。`UUID` 重复和控制流不配对（未闭合、无开头、块外分支、交错、同组动作 ID 不一致、`GroupingIdentifier` 复用或缺失、非法 `WFControlFlowMode`）报 error，退出码为 1；`ActionOutput` 引用不存在的动作、或引用自身及后面的动作报 warning。`.json` / `.xml` 源码附带行号。Skill 开发循环在 `compile` 前加入这一步。
+
 ## [0.1.0] - 2026-10-26
 
 ### Added
