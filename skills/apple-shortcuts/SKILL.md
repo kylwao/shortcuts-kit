@@ -33,6 +33,7 @@ shortcuts-src decompile "<iCloud URL 或 .shortcut 文件>" -o "MyShortcuts/<分
 - [ ] 用 Grep 定位要改的动作，只读 source.json 的局部片段
 - [ ] 编辑 source.json（遵守 references/rules.md 的编辑约束）
 - [ ] shortcuts-src decompile <名称>.source.json -o <同目录> --name <名称>   # 刷新 flow.md / meta.json
+- [ ] shortcuts-src check <名称>.source.json   # 结构校验：有 error 先修好；warning 逐条确认
 - [ ] shortcuts-src compile <名称>.source.json --allow-unsigned -o /tmp/<名称>.check.shortcut   # 快速验证
 - [ ] shortcuts-src compile <名称>.source.json   # 签名产物，交给用户导入
 - [ ] 追加 VERSIONS.md 条目

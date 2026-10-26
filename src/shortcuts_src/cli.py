@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 from . import __version__
+from .check import check_input, report_lines
 from .compile import compile_source
 from .decompile import decompile_input, inspect_input
 from .ingest import ingest
@@ -110,6 +111,18 @@ def _add_inspect(sub: argparse._SubParsersAction) -> None:
     p.set_defaults(func=_run_inspect)
 
 
+def _add_check(sub: argparse._SubParsersAction) -> None:
+    p = sub.add_parser(
+        "check",
+        help="Validate structure before compiling: duplicate UUIDs, unpaired control flow, broken output references.",
+    )
+    p.add_argument(
+        "input",
+        help="iCloud URL or local .shortcut / .plist / .xml / .json file. JSON and XML sources get line numbers.",
+    )
+    p.set_defaults(func=_run_check)
+
+
 def _add_ingest_logs(sub: argparse._SubParsersAction) -> None:
     p = sub.add_parser(
         "ingest-logs",
@@ -208,6 +221,13 @@ def _run_inspect(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_check(args: argparse.Namespace) -> int:
+    result = check_input(args.input)
+    for line in report_lines(result):
+        print(line)
+    return 1 if result.errors else 0
+
+
 def _run_ingest_logs(args: argparse.Namespace) -> int:
     since = None
     if args.since:
@@ -251,6 +271,7 @@ def build_parser() -> argparse.ArgumentParser:
     _add_decompile(sub)
     _add_compile(sub)
     _add_inspect(sub)
+    _add_check(sub)
     _add_ingest_logs(sub)
     return parser
 
